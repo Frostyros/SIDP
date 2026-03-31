@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  INPUTER
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       Role     @default(INPUTER)
+  created_at DateTime @default(now())
+
+  @@map("users")
+}
+
+model Employee {
+  id           String   @id @default(uuid())
+  name         String
+  employee_id  String   @unique
+  position     String
+  department   String
+  photo_url    String?
+  created_at   DateTime @default(now())
+
+  participations TrainingParticipant[]
+
+  @@map("employees")
+}
+
+model Training {
+  id             String   @id @default(uuid())
+  training_name  String
+  training_type  String
+  organizer      String
+  location       String
+  description    String?
+  start_date     DateTime
+  end_date       DateTime
+  total_jp       Int
+  created_at     DateTime @default(now())
+
+  participants   TrainingParticipant[]
+
+  @@map("trainings")
+}
+
+model TrainingParticipant {
+  id          String   @id @default(uuid())
+  training_id String
+  employee_id String
+  created_at  DateTime @default(now())
+
+  training    Training @relation(fields: [training_id], references: [id], onDelete: Cascade)
+  employee    Employee @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+
+  @@unique([training_id, employee_id])
+  @@map("training_participants")
+}

@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Prisma generated
+generated/prisma/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Temp files
+*.local
+
+# Import scripts (contain local paths)
+api/import-excel.ts
+api/import-employees.ts
+api/probe-excel.js
+api/test.js
+api/test-excel.js
