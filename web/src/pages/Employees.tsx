@@ -196,7 +196,7 @@ const Employees = () => {
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => openProfile(emp.id)}
-                          className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                          className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors cursor-pointer"
                         >
                           View Profile
                         </button>

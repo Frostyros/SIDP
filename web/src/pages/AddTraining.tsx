@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
-import { Save, Loader2, Calendar, MapPin, AlignLeft, Shield, Clock } from 'lucide-react';
+import { Save, Loader2, Calendar, MapPin, AlignLeft, Shield, Clock, Search } from 'lucide-react';
 import api from '../lib/axios';
 import { TRAINING_CATEGORIES } from '../lib/trainingTypes';
 
@@ -11,6 +11,7 @@ const AddTraining = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [employees, setEmployees] = useState<any[]>([]);
+  const [participantSearch, setParticipantSearch] = useState('');
   
   const [formData, setFormData] = useState({
     training_name: '',
@@ -270,13 +271,30 @@ const AddTraining = () => {
                 </span>
               </div>
             </CardHeader>
-            <CardContent className="p-0">
-              <div className="h-[450px] overflow-y-auto p-2">
+            <CardContent className="p-0 flex flex-col">
+              <div className="p-3 border-b border-gray-100">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Cari nama atau NIP..."
+                    value={participantSearch}
+                    onChange={(e) => setParticipantSearch(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50/50"
+                  />
+                </div>
+              </div>
+              <div className="h-[400px] overflow-y-auto p-2">
                 {employees.length === 0 ? (
                   <div className="p-6 text-center text-sm text-gray-500 font-medium">Loading participants...</div>
                 ) : (
                   <div className="space-y-1">
-                    {employees.map(emp => (
+                    {employees
+                      .filter(emp => 
+                        emp.name.toLowerCase().includes(participantSearch.toLowerCase()) || 
+                        (emp.employee_id && emp.employee_id.includes(participantSearch))
+                      )
+                      .map(emp => (
                       <label 
                         key={emp.id} 
                         className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors border ${formData.participants.includes(emp.id) ? 'bg-blue-50 border-blue-200' : 'border-transparent hover:bg-gray-50'}`}
