@@ -649,21 +649,20 @@ const Trainings = () => {
                 </div>
 
                 {t.participants?.length > 0 ? (
-                  <div className="divide-y divide-gray-50">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-gray-50/30">
                     {t.participants.map((p: any, idx: number) => (
-                      <div key={p.id || idx} className="px-5 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors">
-                        <div className="h-9 w-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" style={{ backgroundColor: cat.color }}>
+                      <div key={p.id || idx} className="px-3 py-2 flex items-center gap-2.5 bg-white rounded-lg border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
+                        <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0" style={{ backgroundColor: cat.color }}>
                           {p.employee?.name?.charAt(0)?.toUpperCase() || '?'}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm text-gray-900 truncate">{p.employee?.name || 'Unknown'}</div>
-                          <div className="flex items-center gap-2 text-[10px] text-gray-400 mt-0.5">
-                            <span>{p.employee?.position || '-'}</span>
-                            <span>·</span>
-                            <span>{p.employee?.department || '-'}</span>
+                          <div className="font-bold text-xs text-gray-800 truncate leading-tight">{p.employee?.name || 'Unknown'}</div>
+                          <div className="flex items-center gap-1.5 text-[9px] text-gray-400 mt-0.5 truncate">
+                            <span className="truncate">{p.employee?.position || '-'}</span>
+                            <span className="shrink-0">•</span>
+                            <span className="font-mono shrink-0">{p.employee?.employee_id || ''}</span>
                           </div>
                         </div>
-                        <span className="text-[10px] text-gray-400 font-mono shrink-0">{p.employee?.employee_id || ''}</span>
                       </div>
                     ))}
                   </div>
